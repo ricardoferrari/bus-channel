@@ -10,7 +10,7 @@ sharedMappings.register(
 
 module.exports = {
   output: {
-    uniqueName: "shell",
+    uniqueName: "enigma",
     publicPath: "auto"
   },
   optimization: {
@@ -28,11 +28,19 @@ module.exports = {
     new ModuleFederationPlugin({
         library: { type: "module" },
 
+        // For remotes (please adjust)
+        // name: "enigma",
+        // filename: "remoteEntry.js",
+        // exposes: {
+        //     './Component': './projects/enigma/src/app/app.component.ts',
+        // },
+
         // For hosts (please adjust)
-        remotes: {
-            "enigma": "http://localhost:4201/remoteEntry.js",
-            "turingDisplay": "http://localhost:4202/remoteEntry.js",
-        },
+        // remotes: {
+        //     "shell": "http://localhost:4200/remoteEntry.js",
+        //     "turingDisplay": "http://localhost:4202/remoteEntry.js",
+
+        // },
 
         shared: share({
           "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' },

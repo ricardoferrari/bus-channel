@@ -10,7 +10,7 @@ sharedMappings.register(
 
 module.exports = {
   output: {
-    uniqueName: "shell",
+    uniqueName: "turingDisplay",
     publicPath: "auto"
   },
   optimization: {
@@ -28,10 +28,11 @@ module.exports = {
     new ModuleFederationPlugin({
         library: { type: "module" },
 
-        // For hosts (please adjust)
-        remotes: {
-            "enigma": "http://localhost:4201/remoteEntry.js",
-            "turingDisplay": "http://localhost:4202/remoteEntry.js",
+        // For remotes (please adjust)
+        name: "turingDisplay",
+        filename: "remoteEntry.js",
+        exposes: {
+            './Component': './projects/turing-display/src/app/app.component.ts',
         },
 
         shared: share({

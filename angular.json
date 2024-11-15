@@ -110,103 +110,6 @@
 				}
 			}
 		},
-		"display": {
-			"projectType": "application",
-			"schematics": {
-				"@schematics/angular:component": {
-					"style": "scss"
-				}
-			},
-			"root": "projects/display",
-			"sourceRoot": "projects/display/src",
-			"prefix": "app",
-			"architect": {
-				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
-					"options": {
-						"outputPath": "dist/display",
-						"index": "projects/display/src/index.html",
-						"main": "projects/display/src/main.ts",
-						"polyfills": [
-							"zone.js"
-						],
-						"tsConfig": "projects/display/tsconfig.app.json",
-						"inlineStyleLanguage": "scss",
-						"assets": [
-							"projects/display/src/favicon.ico",
-							"projects/display/src/assets"
-						],
-						"styles": [
-							"projects/display/src/styles.scss"
-						],
-						"scripts": []
-					},
-					"configurations": {
-						"production": {
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "500kb",
-									"maximumError": "1mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "2kb",
-									"maximumError": "4kb"
-								}
-							],
-							"outputHashing": "all"
-						},
-						"development": {
-							"buildOptimizer": false,
-							"optimization": false,
-							"vendorChunk": true,
-							"extractLicenses": false,
-							"sourceMap": true,
-							"namedChunks": true
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
-					"configurations": {
-						"production": {
-							"browserTarget": "display:build:production"
-						},
-						"development": {
-							"browserTarget": "display:build:development"
-						}
-					},
-					"defaultConfiguration": "development"
-				},
-				"extract-i18n": {
-					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "display:build"
-					}
-				},
-				"test": {
-					"builder": "@angular-devkit/build-angular:karma",
-					"options": {
-						"polyfills": [
-							"zone.js",
-							"zone.js/testing"
-						],
-						"tsConfig": "projects/display/tsconfig.spec.json",
-						"inlineStyleLanguage": "scss",
-						"assets": [
-							"projects/display/src/favicon.ico",
-							"projects/display/src/assets"
-						],
-						"styles": [
-							"projects/display/src/styles.scss"
-						],
-						"scripts": []
-					}
-				}
-			}
-		},
 		"enigma": {
 			"projectType": "application",
 			"schematics": {
@@ -219,7 +122,7 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "ngx-build-plus:browser",
 					"options": {
 						"outputPath": "dist/enigma",
 						"index": "projects/enigma/src/index.html",
@@ -236,7 +139,9 @@
 						"styles": [
 							"projects/enigma/src/styles.scss"
 						],
-						"scripts": []
+						"scripts": [],
+						"extraWebpackConfig": "projects/enigma/webpack.config.js",
+						"commonChunk": false
 					},
 					"configurations": {
 						"production": {
@@ -252,7 +157,8 @@
 									"maximumError": "4kb"
 								}
 							],
-							"outputHashing": "all"
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/enigma/webpack.prod.config.js"
 						},
 						"development": {
 							"buildOptimizer": false,
@@ -266,21 +172,28 @@
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "ngx-build-plus:dev-server",
 					"configurations": {
 						"production": {
-							"browserTarget": "enigma:build:production"
+							"browserTarget": "enigma:build:production",
+							"extraWebpackConfig": "projects/enigma/webpack.prod.config.js"
 						},
 						"development": {
 							"browserTarget": "enigma:build:development"
 						}
 					},
-					"defaultConfiguration": "development"
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4201,
+						"publicHost": "http://localhost:4201",
+						"extraWebpackConfig": "projects/enigma/webpack.config.js"
+					}
 				},
 				"extract-i18n": {
-					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"builder": "ngx-build-plus:extract-i18n",
 					"options": {
-						"browserTarget": "enigma:build"
+						"browserTarget": "enigma:build",
+						"extraWebpackConfig": "projects/enigma/webpack.config.js"
 					}
 				},
 				"test": {
@@ -316,7 +229,7 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "ngx-build-plus:browser",
 					"options": {
 						"outputPath": "dist/turing-display",
 						"index": "projects/turing-display/src/index.html",
@@ -333,7 +246,9 @@
 						"styles": [
 							"projects/turing-display/src/styles.scss"
 						],
-						"scripts": []
+						"scripts": [],
+						"extraWebpackConfig": "projects/turing-display/webpack.config.js",
+						"commonChunk": false
 					},
 					"configurations": {
 						"production": {
@@ -349,7 +264,8 @@
 									"maximumError": "4kb"
 								}
 							],
-							"outputHashing": "all"
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/turing-display/webpack.prod.config.js"
 						},
 						"development": {
 							"buildOptimizer": false,
@@ -363,21 +279,28 @@
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "ngx-build-plus:dev-server",
 					"configurations": {
 						"production": {
-							"browserTarget": "turing-display:build:production"
+							"browserTarget": "turing-display:build:production",
+							"extraWebpackConfig": "projects/turing-display/webpack.prod.config.js"
 						},
 						"development": {
 							"browserTarget": "turing-display:build:development"
 						}
 					},
-					"defaultConfiguration": "development"
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4202,
+						"publicHost": "http://localhost:4202",
+						"extraWebpackConfig": "projects/turing-display/webpack.config.js"
+					}
 				},
 				"extract-i18n": {
-					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"builder": "ngx-build-plus:extract-i18n",
 					"options": {
-						"browserTarget": "turing-display:build"
+						"browserTarget": "turing-display:build",
+						"extraWebpackConfig": "projects/turing-display/webpack.config.js"
 					}
 				},
 				"test": {
