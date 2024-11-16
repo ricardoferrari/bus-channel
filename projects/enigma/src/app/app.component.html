@@ -4,9 +4,10 @@
   <input
     name="message"
     type="text"
-    [(ngModel)]="message"
+    #message
+    autocomplete="off"
   >
-  <button (click)="sendMessage(message)">Send</button>
+  <button (click)="sendMessage(message.value)">Send</button>
 </form>
 <br>
 <form>
@@ -14,7 +15,8 @@
   <input
     name="key"
     type="text"
-    [(ngModel)]="key"
+    #key
+    autocomplete="off"
   >
-  <button (click)="sendKey(key)">Send</button>
+  <button (click)="sendKey(key.value)">Send</button>
 </form>

@@ -1,30 +1,41 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, signal, WritableSignal } from '@angular/core';
-import { Broadcast, BroadcastChannelService } from 'broadcast-channel';
+import { Component, OnDestroy, signal, WritableSignal, ChangeDetectionStrategy, AfterViewChecked } from '@angular/core';
+import { BroadcastChannelService } from 'broadcast-channel';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy, AfterViewChecked {
   title = 'turing-display';
+
+  private subscription: Subscription = new Subscription();
 
   receivedMessage: WritableSignal<string> = signal('');
   receivedKey: WritableSignal<string> = signal('');
 
   constructor(
     private readonly broadcastChannelService: BroadcastChannelService,
-    private readonly changeDetectorRef: ChangeDetectorRef
   ) {
-    this.broadcastChannelService.messagesObservable('crypto').subscribe((message: string) => {
-      console.log('received on display: ', message);
-      this.receivedMessage.set(message);
-      this.changeDetectorRef.detectChanges();
-    });
-    this.broadcastChannelService.messagesObservable('public-key').subscribe((key: string) => {
-      console.log('received on display: ', key);
-      this.receivedKey.set(key);
-      this.changeDetectorRef.detectChanges();
-    });
+    this.subscription.add(
+      this.broadcastChannelService.messagesObservable('crypto').subscribe((message: string) => {
+        this.receivedMessage.set(message);
+      })
+    );
+    this.subscription.add(
+      this.broadcastChannelService.messagesObservable('public-key').subscribe((key: string) => {
+        this.receivedKey.set(key);
+      })
+    );
+  }
+
+  ngAfterViewChecked(): void {
+    console.log('Mudou view!');
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

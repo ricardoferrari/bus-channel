@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, OnDestroy } from '@angular/core';
+import { Inject, Injectable, InjectionToken, NgZone, OnDestroy } from '@angular/core';
 import { BehaviorSubject, filter, map, Observable } from 'rxjs';
 import { Broadcast } from '../broadcast';
 
@@ -16,6 +16,7 @@ export class BroadcastChannelService implements OnDestroy {
 
   constructor(
     @Inject(BROADCAST_CHANNEL) public channel: BroadcastChannel,
+    private ngZone: NgZone
   ) {
     this.channel.onmessage = this.onMessage.bind(this);
   }
@@ -29,12 +30,13 @@ export class BroadcastChannelService implements OnDestroy {
       type: _type,
       content: _content
     };
-    console.log('send: ', _content);
     this.channel.postMessage(message);
   }
 
   onMessage(_message: MessageEvent) {
-    this.message.next(_message.data);
+    this.ngZone.run(() => {
+      this.message.next(_message.data);
+    });
   }
 
   messagesObservable(_type: string): Observable<any> {
