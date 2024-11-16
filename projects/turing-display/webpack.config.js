@@ -32,7 +32,7 @@ module.exports = {
         name: "turingDisplay",
         filename: "remoteEntry.js",
         exposes: {
-            './Component': './projects/turing-display/src/app/app.component.ts',
+          './Component': './projects/turing-display/src/app/app.component.ts',
         },
 
         shared: share({

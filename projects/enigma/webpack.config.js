@@ -29,18 +29,11 @@ module.exports = {
         library: { type: "module" },
 
         // For remotes (please adjust)
-        // name: "enigma",
-        // filename: "remoteEntry.js",
-        // exposes: {
-        //     './Component': './projects/enigma/src/app/app.component.ts',
-        // },
-
-        // For hosts (please adjust)
-        // remotes: {
-        //     "shell": "http://localhost:4200/remoteEntry.js",
-        //     "turingDisplay": "http://localhost:4202/remoteEntry.js",
-
-        // },
+        name: "enigma",
+        filename: "remoteEntry.js",
+        exposes: {
+            './Component': './projects/enigma/src/app/app.component.ts',
+        },
 
         shared: share({
           "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
