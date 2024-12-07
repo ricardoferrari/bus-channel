@@ -10,13 +10,5 @@
   <button (click)="sendMessage(message.value)">Send</button>
 </form>
 <br>
-<form>
-  <label for="key">Key: </label>
-  <input
-    name="key"
-    type="text"
-    #key
-    autocomplete="off"
-  >
-  <button (click)="sendKey(key.value)">Send</button>
-</form>
+
+<button (click)="sendKey()">Create and send a new cripto key</button>

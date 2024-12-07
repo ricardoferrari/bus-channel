@@ -1,4 +1,15 @@
-<h1>Shell</h1>
+<h1>Exemplo de aplicação com Broadcast Channel e Web Crypto API</h1>
+<p>Neste exemplo os dois microfrontends estão totalmente desacoplados. As duas aplicações, apesar de isoladas, podem publicar e escutar mensagens no BroadcastChannel.</p>
+<section>
+  <article>
+    <h2>Microfrontend 1 - Enigma</h2>
+    <p>Este microfrontend é uma aplicação Angular, que faz alusão ao equipamento criptográfico muito utilizado na II Guerra Mundial, o Enigma. Nela utiliza-se a Web Crypto API para gerar uma chave simétrica e criptografar uma mensagem, posteriormente publicada no BroadcastChannel e a disposição de todos outros componentes presentes no mesmo contexto</p>
+  </article>
+  <article>
+    <h2>Microfrontend 2 - Turing</h2>
+    <p>Este microfrontend é uma aplicação Angular, que faz alusão ao matemático Alan Turing, que foi um dos responsáveis por quebrar o código da máquina Enigma. Nela utiliza-se a Web Crypto API para descriptografar a mensagem publicada no BroadcastChannel e exibir o resultado na tela</p>
+  </article>
+</section>
 <router-outlet></router-outlet>
 <!-- add a divider -->
 <hr>
