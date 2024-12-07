@@ -18,6 +18,20 @@ export class AppComponent implements OnDestroy, AfterViewChecked {
     const dec = new TextDecoder();
     return dec.decode(this.receivedMessage().cyphertext);
   });
+  cryptedHexaMessage: Signal<string> = computed(() => {
+    if (this.receivedMessage().cyphertext.byteLength > 0) {
+        const view = new DataView(this.receivedMessage().cyphertext);
+        let binary = '';
+        for (let i = 0; i < view.byteLength; i++) {
+          binary += view.getUint8(i).toString(16);
+        }
+        return binary;
+    } else {
+      return '';
+    }
+  });
+
+
   decryptedMessage: Signal<Promise<string>> = computed( async () => {
     if (this.receivedKey() && this.receivedMessage().cyphertext.byteLength > 0) {
       const cryptoKey = this.receivedKey()!;
@@ -31,8 +45,20 @@ export class AppComponent implements OnDestroy, AfterViewChecked {
       return '';
     }
   });
+
   receivedKey: WritableSignal<CryptoKey | undefined> = signal(undefined);
   rawKey: WritableSignal<string> = signal('');
+  cryptedHexaKey: Signal<string> = computed(() => {
+    if (this.rawKey().length > 0) {
+        let binary = '';
+        for (let i = 0; i < this.rawKey().length; i++) {
+          binary += this.rawKey().charCodeAt(i).toString(16);
+        }
+        return binary;
+    } else {
+      return '';
+    }
+  });
 
   constructor(
     private readonly broadcastChannelService: BroadcastChannelService,
